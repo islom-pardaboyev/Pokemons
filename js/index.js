@@ -1,7 +1,9 @@
 'use strict'
 const elHeader = document.querySelector(".header");
 const elList = document.querySelector(".list");
-const elSelect = document.querySelector('.select')
+const elSelect = document.querySelector('.select');
+const elInput = document.querySelector('.input');
+const elForm = document.querySelector('.form')
 
 const uniqueTypes = []
 const list = JSON.parse(window.localStorage.getItem('filterpokemons')) || pokemons
@@ -66,8 +68,6 @@ const filterSelect = (arr, htmlElement) => {
     arr.forEach(pokemon => {
         if (pokemon.type.includes(selectValue)) {
             filteredPokemons.push(pokemon)
-        }else if(selectValue === `All`){
-            filteredPokemons = arr
         }
     })
 
@@ -76,6 +76,28 @@ const filterSelect = (arr, htmlElement) => {
     return filteredPokemons
 }
 
+// Filter Input
+const filterInput = (arr, htmlElement) => {
+    elList.innerHTML = null
+    const inputValue = htmlElement.value
+
+    const filteredPokemonsByName = []
+
+    arr.forEach(pokemon => {
+        if (pokemon.name.includes(inputValue)) {
+            filteredPokemonsByName.push(pokemon)
+        }
+    })
+    localStorage.setItem('filterpokemons', JSON.stringify(filteredPokemonsByName))
+}
+
+// Form DOM
+elForm.addEventListener('submit', () => {
+    const filteredPokemons = filterInput(pokemons, elInput)
+    renderPokemons(filteredPokemons, elList)
+})
+
+// Select DOM
 elSelect.addEventListener('change', () => {
     const filteredPokemons = filterSelect(pokemons, elSelect)
     renderPokemons(filteredPokemons, elList)
@@ -86,11 +108,6 @@ elList.setAttribute('class', 'flex flex-wrap gap-[2rem]')
 renderPokemons(list, elList)
 generateType(pokemons);
 renderType(uniqueTypes, elSelect)
-
-elSelect.addEventListener('change', () => {
-    const filteredPokemons = filterSelect(pokemons, elSelect)
-    renderPokemons(filteredPokemons, elList)
-});
 
 elList.setAttribute('class', 'flex flex-wrap gap-[2rem]')
 
