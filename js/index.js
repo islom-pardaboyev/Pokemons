@@ -86,8 +86,6 @@ const filterInput = (arr, htmlElement) => {
     arr.forEach(pokemon => {
         if (pokemon.name.includes(inputValue)) {
             filteredPokemonsByName.push(pokemon)
-        }else{
-            alert("Bunday nom mavjud emas!")
         }
     })
     localStorage.setItem('filterpokemons', JSON.stringify(filteredPokemonsByName))
