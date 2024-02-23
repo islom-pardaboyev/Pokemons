@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UIC Projects</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon">
 </head>
 <body class="bg-[#ffd845] text-[black] px-[10rem]">
     <header class="flex mt-[2rem] w-[100%] items-center justify-center  header">
@@ -12,9 +13,20 @@
         <i class="fa-regular fa-heart absolute top-[4rem] text-[2rem] left-[80%]"></i>
     </header>
 
-    <select name="" class="select" id="">
-        <option value="">All</option>
-    </select>
+
+    <div class="flex my-[2rem] items-center justify-center gap-[2rem]">
+        <div>
+            <label for="">Type:</label>
+            <select name="" class="select border border-[black] w-[10rem] p-[5px] rounded-md" id="">
+                <option value="All">All</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="">Name:</label>
+            <input type="text" class="border border-[black] w-[10rem] p-[5px] px-[10px] rounded-md placeholder-[black]" placeholder="Search...">
+        </div>
+    </div>
     
     <ul class="list">
 

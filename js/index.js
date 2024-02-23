@@ -5,7 +5,6 @@ const elSelect = document.querySelector('.select')
 
 const uniqueTypes = []
 const list = JSON.parse(window.localStorage.getItem('filterpokemons')) || pokemons
-console.log(pokemons);
 
 // Render Pokemons
 const renderPokemons = (arr, htmlElement) => {
@@ -14,15 +13,22 @@ const renderPokemons = (arr, htmlElement) => {
         const newItem = document.createElement('li')
         const newImg = document.createElement('img')
         const newP = document.createElement('p')
+        const newLi = document.createElement('li')
+        const newSpan = document.createElement('span')
 
-        newImg.setAttribute('src', pokemon.img)
-        newImg.style.width = '250px'
-        newImg.style.height = '350px'
 
         newItem.textContent = pokemon.name
         newP.textContent = pokemon.type
 
-        htmlElement.append(newItem, newImg, newP)
+        htmlElement.append(newLi)
+        newLi.append(newImg, newSpan, newItem, newP)
+
+
+        newImg.setAttribute('src', pokemon.img)
+        newImg.setAttribute('class', 'w-[150px] h-[150px]')
+        newSpan.setAttribute('class', 'w-[100%] bg-[black] my-[10px] block h-[2px]')
+        newImg.setAttribute('class', 'mx-auto')
+        newLi.setAttribute('class', 'bg-[white] rounded-md border border-[black] w-[270px] h-[270px] p-3')
 
     })
 }
@@ -51,19 +57,43 @@ const renderType = (arr, htmlElement) => {
 
 // Filter Select
 const filterSelect = (arr, htmlElement) => {
-    const selectValue = htmlElement.value;
+    elList.innerHTML = null
 
-    const filteredPokemons = arr.filter(pokemon => pokemon.type.includes(selectValue));
+    const selectValue = htmlElement.value
 
- 
-    return filteredPokemons;
+    const filteredPokemons = []
 
+    arr.forEach(pokemon => {
+        if (pokemon.type.includes(selectValue)) {
+            filteredPokemons.push(pokemon)
+        }else if(selectValue === `All`){
+            filteredPokemons = arr
+        }
+    })
+
+    localStorage.setItem('filterpokemons', JSON.stringify(filteredPokemons))
+    renderPokemons(filteredPokemons, elList)  
+    return filteredPokemons
 }
 
 elSelect.addEventListener('change', () => {
-    const filteredPokemons = filterSelect(pokemons, elSelect);
-    renderPokemons(filteredPokemons, elList);
+    const filteredPokemons = filterSelect(pokemons, elSelect)
+    renderPokemons(filteredPokemons, elList)
 });
+
+elList.setAttribute('class', 'flex flex-wrap gap-[2rem]')
+
+renderPokemons(list, elList)
+generateType(pokemons);
+renderType(uniqueTypes, elSelect)
+
+elSelect.addEventListener('change', () => {
+    const filteredPokemons = filterSelect(pokemons, elSelect)
+    renderPokemons(filteredPokemons, elList)
+});
+
+elList.setAttribute('class', 'flex flex-wrap gap-[2rem]')
+
 
 renderPokemons(list, elList)
 generateType(pokemons);
