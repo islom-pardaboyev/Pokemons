@@ -82,17 +82,26 @@ const filterInput = (arr, htmlElement) => {
     const inputValue = htmlElement.value
 
     const filteredPokemonsByName = []
+    const errorStatuss = []
 
     arr.forEach(pokemon => {
         if (pokemon.name.includes(inputValue)) {
             filteredPokemonsByName.push(pokemon)
         }
     })
+
+    arr.forEach(errorStatus => {
+        if (!errorStatus.name.includes(inputValue)) {
+            document.querySelector('.modal').classList.remove('invisible')
+            errorStatuss.push(errorStatus)
+        }
+    })
     localStorage.setItem('filterpokemons', JSON.stringify(filteredPokemonsByName))
 }
 
 // Form DOM
-elForm.addEventListener('submit', () => {
+elForm.addEventListener('submit', (e) => {
+    e.preventDefault()
     const filteredPokemons = filterInput(pokemons, elInput)
     renderPokemons(filteredPokemons, elList)
 })
@@ -102,15 +111,6 @@ elSelect.addEventListener('change', () => {
     const filteredPokemons = filterSelect(pokemons, elSelect)
     renderPokemons(filteredPokemons, elList)
 });
-
-elList.setAttribute('class', 'flex flex-wrap gap-[2rem]')
-
-renderPokemons(list, elList)
-generateType(pokemons);
-renderType(uniqueTypes, elSelect)
-
-elList.setAttribute('class', 'flex flex-wrap gap-[2rem]')
-
 
 renderPokemons(list, elList)
 generateType(pokemons);

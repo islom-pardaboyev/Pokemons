@@ -1,0 +1,5 @@
+    arr.forEach(pokemon => {
+        if (pokemon.type.includes(selectValue)) {
+            filteredPokemons.push(pokemon)
+        }
+    })
