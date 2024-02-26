@@ -37,19 +37,18 @@ const renderPokemons = (arr, htmlElement) => {
 
 // Generate Type
 const generateType = (arr) => {
-    arr.forEach(pokemon => {
-        pokemon.type.forEach(type => {
-            if(!uniqueTypes.includes(type)){
-                uniqueTypes.push(type)
-            }
-        })
-    });
-}
+    arr.map((pokemon) => pokemon.type.forEach((type) => {
+        if (!uniqueTypes.includes(type)) {
+            uniqueTypes.push(type);
+        }
+    }));
+};
+
 
 
 // Render Type
 const renderType = (arr, htmlElement) => {
-    arr.forEach((type) => {
+    arr.map((type) => {
         const newOption = document.createElement('option')
         newOption.setAttribute('value', type)
         newOption.textContent = type
